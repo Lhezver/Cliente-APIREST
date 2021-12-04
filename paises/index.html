@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paises</title>
+  <title>Países</title>
   <link rel="stylesheet" href="bootstrap.min.css">
   <script src="bootstrap.bundle.min.js"></script>
   <style>
@@ -16,15 +16,16 @@
 </head>
 
 <body>
+
   <div class="container">
     <div class="row d-flex justify-content-center">
       <div class="col-4 d-flex justify-content-center">
-        <h1>Paises</h1>
+        <h1>Países</h1>
       </div>
     </div>
     <div class="row d-flex justify-content-center">
       <div class="col-4 d-flex justify-content-center">
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal"
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-crear"
           onclick="SetearCrear()">Crear</button>
       </div>
     </div>
@@ -53,11 +54,11 @@
     </div>
 
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal-crear" tabindex="-1" aria-labelledby="modal-crearLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Datos del pais</h5>
+            <h5 class="modal-title" id="modal-crearLabel">Datos del país</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -82,10 +83,31 @@
     </div>
   </div>
 
+
+  <div class="modal fade" id="modal-eliminar" tabindex="-1" aria-labelledby="modal-eliminarLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-eliminarLabel">Eliminar País</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>¿Desea borrar el siguiente país?</p>
+          <p id="txt-eliminar"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="Eliminar()" data-bs-dismiss="modal">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     var editando = 0;
     var creando = 0;
     var idEditado = -1;
+    var idBorrar = -1;
 
     function GetPaises() {
       let xmlhttp = new XMLHttpRequest();
@@ -112,6 +134,8 @@
           var pais = JSON.parse(this.responseText);
           document.getElementById('nombre').value = pais.nombre;
           document.getElementById('habitantes').value = pais.habitantes;
+
+          document.getElementById('txt-eliminar').innerText = 'id:' + pais.id + ', nombre: ' + pais.nombre + ', habitantes: ' + pais.habitantes;
         }
       };
       xmlhttp.open("GET", url, true);
@@ -143,14 +167,16 @@
         });
         btnEditar.className = 'btn btn-warning';
         btnEditar.setAttribute('data-bs-toggle', 'modal');
-        btnEditar.setAttribute('data-bs-target', '#exampleModal');
+        btnEditar.setAttribute('data-bs-target', '#modal-crear');
 
         var btnBorrar = document.createElement('button');
         btnBorrar.innerText = 'Borrar';
         btnBorrar.addEventListener('click', function () {
-          Eliminar(element.id);
+          SetearBorrar(element.id);
         });
         btnBorrar.className = 'btn btn-danger';
+        btnBorrar.setAttribute('data-bs-toggle', 'modal');
+        btnBorrar.setAttribute('data-bs-target', '#modal-eliminar');
 
         tr.appendChild(td1);
         tr.appendChild(td2);
@@ -194,9 +220,9 @@
       xmlhttp.send(JSON.stringify(pais));
     }
 
-    function Eliminar(id) {
+    function Eliminar() {
       let xmlhttp = new XMLHttpRequest();
-      let url = 'http://localhost/api/paises/' + id;
+      let url = 'http://localhost/api/paises/' + idBorrar;
 
       xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 204) {
@@ -232,6 +258,11 @@
       else {
         Editar();
       }
+    }
+
+    function SetearBorrar(id) {
+      idBorrar = id;
+      GetPais(id);
     }
 
     GetPaises();
