@@ -6,11 +6,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Países</title>
-  <link rel="stylesheet" href="bootstrap.min.css">
-  <script src="bootstrap.bundle.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
   <style>
     td button {
       margin-left: 10px;
+      margin-bottom: 2px;
     }
   </style>
 </head>
@@ -26,7 +31,7 @@
     <div class="row d-flex justify-content-center">
       <div class="col-4 d-flex justify-content-center">
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-crear"
-          onclick="SetearCrear()">Crear</button>
+          onclick="SetearCrear()"><i class="bi bi-capslock"></i> Crear</button>
       </div>
     </div>
     <div class="row">
@@ -34,10 +39,10 @@
         <table class="table table-striped table-hover">
           <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Habitantes</th>
-              <th scope="col">Acciones</th>
+              <th scope="col" class="col-1">#</th>
+              <th scope="col" class="col-4">Nombre</th>
+              <th scope="col" class="col-4">Habitantes</th>
+              <th scope="col" class="col-3">Acciones</th>
             </tr>
           </thead>
           <tbody id="cuerpo-tabla">
@@ -58,7 +63,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modal-crearLabel">Datos del país</h5>
+            <h5 class="modal-title" id="modal-crearLabel">Datos del país</i></h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -74,9 +79,10 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" onclick="EvaluarAccion()"
-              data-bs-dismiss="modal">Enviar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-circle"></i>
+              Cancelar</button>
+            <button type="button" class="btn btn-primary" onclick="EvaluarAccion()" data-bs-dismiss="modal"><i
+                class="bi bi-send"></i> Enviar</button>
           </div>
         </div>
       </div>
@@ -96,8 +102,8 @@
           <p id="txt-eliminar"></p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" onclick="Eliminar()" data-bs-dismiss="modal">Eliminar</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-circle"></i> Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="Eliminar()" data-bs-dismiss="modal"><i class="bi bi-trash"></i> Eliminar</button>
         </div>
       </div>
     </div>
@@ -161,7 +167,12 @@
         td3.appendChild(txtTd3);
 
         var btnEditar = document.createElement('button');
-        btnEditar.innerText = 'Editar';
+
+        let iconoEditar = document.createElement('i');
+        iconoEditar.className = 'bi bi-pen';
+        btnEditar.append(iconoEditar);
+        btnEditar.append(' Editar');
+
         btnEditar.addEventListener('click', function () {
           SetearEditar(element.id);
         });
@@ -170,13 +181,19 @@
         btnEditar.setAttribute('data-bs-target', '#modal-crear');
 
         var btnBorrar = document.createElement('button');
-        btnBorrar.innerText = 'Borrar';
+
+        let iconoBorrar = document.createElement('i');
+        iconoBorrar.className = 'bi bi-trash';
+        btnBorrar.append(iconoBorrar);
+        btnBorrar.append(' Borrar');
+
         btnBorrar.addEventListener('click', function () {
           SetearBorrar(element.id);
         });
         btnBorrar.className = 'btn btn-danger';
         btnBorrar.setAttribute('data-bs-toggle', 'modal');
         btnBorrar.setAttribute('data-bs-target', '#modal-eliminar');
+
 
         tr.appendChild(td1);
         tr.appendChild(td2);
