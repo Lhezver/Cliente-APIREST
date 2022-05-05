@@ -117,7 +117,7 @@
 
     function GetPaises() {
       let xmlhttp = new XMLHttpRequest();
-      let url = 'http://localhost/api/paises';
+      let url = 'http://localhost/APIREST-PHP/paises';
 
       var listaPaises = [];
 
@@ -133,7 +133,7 @@
 
     function GetPais(id) {
       let xmlhttp = new XMLHttpRequest();
-      let url = 'http://localhost/api/paises/' + id;
+      let url = 'http://localhost/APIREST-PHP/paises/' + id;
 
       xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -207,7 +207,7 @@
 
     function Crear() {
       let xmlhttp = new XMLHttpRequest();
-      let url = 'http://localhost/api/paises';
+      let url = 'http://localhost/APIREST-PHP/paises';
       let pais = { nombre: document.getElementById('nombre').value, habitantes: document.getElementById('habitantes').value };
 
       xmlhttp.onreadystatechange = function () {
@@ -223,7 +223,7 @@
 
     function Editar() {
       let xmlhttp = new XMLHttpRequest();
-      let url = 'http://localhost/api/paises/' + idEditado;
+      let url = 'http://localhost/APIREST-PHP/paises/' + idEditado;
       let pais = { nombre: document.getElementById('nombre').value, habitantes: document.getElementById('habitantes').value };
 
       xmlhttp.onreadystatechange = function () {
@@ -239,7 +239,7 @@
 
     function Eliminar() {
       let xmlhttp = new XMLHttpRequest();
-      let url = 'http://localhost/api/paises/' + idBorrar;
+      let url = 'http://localhost/APIREST-PHP/paises/' + idBorrar;
 
       xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 204) {
